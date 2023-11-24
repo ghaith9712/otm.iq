@@ -1,91 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <base href="./">
-    <meta charset="UTF-8">
-    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-    <meta name="description" content="A new Flutter project.">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="otm">
-    <link rel="apple-touch-icon" href="icons/Icon-192.png">
-    <link rel="icon" type="image/png" href="favicon.png"/>
-    <title>otm</title>
-    <link rel="manifest" href="manifest.json">
-    <script>
-        var serviceWorkerVersion = '3842999776';
-    </script>
-    <script src="flutter.js" defer></script>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: white; /* لون الخلفية */
-        }
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
 
-        #loading-frame {
-            width: 100vw;
-            height: 100vh;
-            border: none;
-        }
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
 
-        #loading-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: black; /* لون النص */
-        }
-    </style>
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="./">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="otm">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>otm</title>
+  <link rel="manifest" href="manifest.json">
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    var serviceWorkerVersion = '3842999776';
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
 </head>
 <body>
-    <iframe id="loading-frame" src="loading.html" frameborder="0"></iframe>
-    <div id="loading-message">
-        <p id="time-remaining"></p>
-        <p>جارٍ التحميل... الرجاء الانتظار</p>
-    </div>
-    <script>
-        window.addEventListener('load', function(ev) {
-            var timeRemaining = 3000; // وقت التأخير بالميلي ثانية
-            var interval = 1000; // مقدار التحديث بالميلي ثانية
-
-            function updateLoadingMessage() {
-                var secondsRemaining = timeRemaining / 1000;
-                document.getElementById('time-remaining').innerText = 'الوقت المتبقي: ' + secondsRemaining + ' ثانية';
-            }
-
-            function startLoadingApp() {
-                _flutter.loader.loadEntrypoint({
-                    serviceWorker: {
-                        serviceWorkerVersion: serviceWorkerVersion,
-                    },
-                    onEntrypointLoaded: function(engineInitializer) {
-                        engineInitializer.initializeEngine().then(function(appRunner) {
-                            // Once Flutter is ready, hide the loading elements and run the app
-                            document.getElementById('loading-frame').style.display = 'none';
-                            document.getElementById('loading-message').style.display = 'none';
-                            appRunner.runApp();
-                        });
-                    }
-                });
-            }
-
-            // التحديث الدوري للوقت المتبقي
-            var countdownInterval = setInterval(function() {
-                timeRemaining -= interval;
-                updateLoadingMessage();
-
-                // عند انتهاء الوقت، قم بتحميل التطبيق
-                if (timeRemaining <= 0) {
-                    clearInterval(countdownInterval);
-                    startLoadingApp();
-                }
-            }, interval);
-
-            // عرض الرسالة الأولية
-            updateLoadingMessage();
-        });
-    </script>
+  <script>
+    window.addEventListener('load', function(ev) {
+      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+          });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
